@@ -1,0 +1,18 @@
+CREATE TABLE Coin (
+id INTEGER NOT NULL PRIMARY KEY,
+name TEXT NOT NULL,
+symbol TEXT,
+slug TEXT,
+marketCap REAL,
+price REAL,
+imageLogo TEXT
+);
+
+insertCoin:
+INSERT OR REPLACE INTO Coin(id, name, symbol, slug, price, marketCap, imageLogo) VALUES(?, ?, ?, ?, ?, ?, ?);
+
+selectAll:
+SELECT * FROM Coin;
+
+
+

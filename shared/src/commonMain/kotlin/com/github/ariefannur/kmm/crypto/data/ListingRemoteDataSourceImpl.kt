@@ -16,9 +16,11 @@ class ListingRemoteDataSourceImpl(
         val response = client.get(GET_LISTING_PATH) {
             headers {  append("X-CMC_PRO_API_KEY", "722af30a-8002-42bc-8444-0d11ae7e4d79") }
         }
+        val imageLogo = "https://s2.coinmarketcap.com/static/img/coins/64x64/"
+
         if (response.status == HttpStatusCode.OK) {
             return response.body<ListingResult>().data.map {
-                Coin(it.name, it.symbol, it.slug, it.num_market_pairs)
+                Coin(it.id, it.name, it.symbol, it.slug, it.quote.USD.price, it.quote.USD.marketCap,imageLogo + it.id + ".png")
             }
         } else throw Exception(response.status.description)
     }

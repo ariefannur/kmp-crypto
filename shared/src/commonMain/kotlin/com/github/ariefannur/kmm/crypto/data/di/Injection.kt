@@ -1,16 +1,18 @@
 package com.github.ariefannur.kmm.crypto.data.di
 
 import com.github.ariefannur.kmm.crypto.common.platformModule
+import com.github.ariefannur.kmm.crypto.data.Database
+import com.github.ariefannur.kmm.crypto.data.ListingLocalDataSourceImpl
 import com.github.ariefannur.kmm.crypto.data.ListingRemoteDataSourceImpl
 import com.github.ariefannur.kmm.crypto.data.ListingRepositoryImpl
 import com.github.ariefannur.kmm.crypto.domain.GetListingLatest
+import com.github.ariefannur.kmm.crypto.domain.abstract.ListingLocalDataSource
 import com.github.ariefannur.kmm.crypto.domain.abstract.ListingRemoteDataSource
 import com.github.ariefannur.kmm.crypto.domain.abstract.ListingRepository
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
-import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,10 +35,12 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     single { createHttpClient(get(), get(), enableNetworkLogs = enableNetworkLogs) }
 
+    single { Database(get()) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob() ) }
 
+    single<ListingLocalDataSource>{ ListingLocalDataSourceImpl(get()) }
     single<ListingRemoteDataSource> { ListingRemoteDataSourceImpl(get()) }
-    single<ListingRepository> { ListingRepositoryImpl(get()) }
+    single<ListingRepository> { ListingRepositoryImpl(get(), get()) }
 
     single { GetListingLatest(get()) }
 }
