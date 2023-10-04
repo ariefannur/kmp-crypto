@@ -11,7 +11,7 @@ class MyApp: Application() {
     override fun onCreate() {
         super.onCreate()
         initKoin(true) {
-            val androidLogger = androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@MyApp)
         }
     }

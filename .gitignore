@@ -5,6 +5,7 @@
 .DS_Store
 /build
 */build
+iosApp/Pods/Target Support Files/*
 /captures
 .externalNativeBuild
 .cxx
