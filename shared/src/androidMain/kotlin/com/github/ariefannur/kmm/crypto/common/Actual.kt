@@ -4,11 +4,12 @@ import android.content.Context
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import com.surrus.peopleinspace.db.CryptoDatabase
-import io.ktor.client.engine.android.*
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.android.Android
 import org.koin.dsl.module
 
 actual fun platformModule() = module {
-    single { Android.create() }
+    single<HttpClientEngine> { Android.create() }
     single { DatabaseDriverFactory(get()) }
 }
 

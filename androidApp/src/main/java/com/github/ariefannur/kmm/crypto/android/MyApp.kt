@@ -1,6 +1,7 @@
 package com.github.ariefannur.kmm.crypto.android
 
 import android.app.Application
+import com.github.ariefannur.kmm.crypto.android.di.viewModelInjection
 import com.github.ariefannur.kmm.crypto.data.di.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -13,6 +14,7 @@ class MyApp: Application() {
         initKoin(true) {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@MyApp)
+            modules(viewModelInjection)
         }
     }
 }

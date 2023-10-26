@@ -7,5 +7,8 @@ data class Coin (
         val slug: String,
         val price: Double,
         val marketCap: Double,
+        val move24: Double,
         val imgLogo: String
-        )
+) {
+    var percentage: Double = 0.0
+}

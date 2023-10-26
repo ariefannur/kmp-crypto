@@ -13,8 +13,10 @@ class ListingLocalDataSourceImpl(private val db: Database): ListingLocalDataSour
         id: Long, name: String,
         symbol: String?, slug: String?,
         price: Double?, marketCap: Double?,
-        logo: String?): Coin {
-        return Coin(id.toInt(), name, symbol.orEmpty(), slug.orEmpty(), price ?: 0.0, marketCap ?: 0.0, logo.orEmpty())
+        move: Double?, logo: String?): Coin {
+        return Coin(id.toInt(), name, symbol.orEmpty(), slug.orEmpty(), price ?: 0.0, marketCap ?: 0.0, move ?: 0.0 , logo.orEmpty()).apply {
+            percentage = this.move24 / this.price
+        }
     }
 
     override suspend fun cacheListLatest(data: List<Coin>) {
@@ -27,6 +29,7 @@ class ListingLocalDataSourceImpl(private val db: Database): ListingLocalDataSour
                     coin.slug,
                     coin.price,
                     coin.marketCap,
+                    coin.move24,
                     coin.imgLogo
                 )
             }

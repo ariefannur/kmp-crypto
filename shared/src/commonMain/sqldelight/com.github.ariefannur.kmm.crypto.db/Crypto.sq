@@ -5,11 +5,12 @@ symbol TEXT,
 slug TEXT,
 marketCap REAL,
 price REAL,
+move REAL,
 imageLogo TEXT
 );
 
 insertCoin:
-INSERT OR REPLACE INTO Coin(id, name, symbol, slug, price, marketCap, imageLogo) VALUES(?, ?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Coin(id, name, symbol, slug, price, marketCap, move, imageLogo) VALUES(?, ?, ?, ?, ?, ?, ?, ?);
 
 selectAll:
 SELECT * FROM Coin;

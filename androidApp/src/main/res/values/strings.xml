@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="light_mode">Light Mode\n</string>
+    <string name="dark_mode">Dark Mode\n</string>
+    <string name="app_name">KMM Crypto</string>
+    <string name="some_value">+250.00(10%)</string>
+</resources>

@@ -20,8 +20,15 @@ class ListingRemoteDataSourceImpl(
 
         if (response.status == HttpStatusCode.OK) {
             return response.body<ListingResult>().data.map {
-                Coin(it.id, it.name, it.symbol, it.slug, it.quote.USD.price, it.quote.USD.marketCap,imageLogo + it.id + ".png")
+                Coin(it.id, it.name.orEmpty(), it.symbol.orEmpty(), it.slug.orEmpty(),
+                    it.quote?.USD?.price ?: 0.0, it.quote?.USD?.marketCap ?: 0.0,
+                    it.quote?.USD?.volumeChange24 ?: 0.0, imageLogo + it.id + ".png").apply {
+                    percentage = this.move24 / this.price
+                }
             }
-        } else throw Exception(response.status.description)
+        } else {
+            println("Error GET ${response.status.description} ::")
+            throw Exception(response.status.description)
+        }
     }
 }
