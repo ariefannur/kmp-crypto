@@ -7,9 +7,12 @@ Crypto App client with shared data and domain layer with kotlin multiplatform
 ## Stack
 Data: 
 1. Remote
-    - Ktor : HTTP Client
+    - Ktor : HTTP Client (API https://coinmarketcap.com/api/documentation/v1/)
 2. Local
    - SqlDelight : Sqlite (Use for caching data / offline suport)
+3. Dependency Injection
+   - Koin
+   
   
 Domain:
  - Wrap to UseCase
