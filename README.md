@@ -1,4 +1,4 @@
-# kmm-crypto
+# kmp-crypto
 Crypto App client with shared data and domain layer with kotlin multiplatform
 
 ## Architecture
@@ -17,8 +17,8 @@ Data:
 Domain:
  - Wrap to UseCase
 
-Presentation:
-- Android : Jetpack Compose
+Presentation: Home
+- Android : Jetpack Compose 
 - iOS : Swift UI
 
 ## Android
@@ -30,4 +30,10 @@ Presentation:
 ## iOS
 
 <img src='screenshot/iOS.png' width='300'>
+
+### Compose Multiplatform 
+
+Exploring compose multiplatform build shared presentation / view both android and iOS 
+
+
 
