@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kmm-crypto"
+rootProject.name = "KMP-Crypto"
 include(":androidApp")
 include(":shared")

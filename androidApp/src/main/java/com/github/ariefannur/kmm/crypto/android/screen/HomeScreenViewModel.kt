@@ -1,7 +1,5 @@
 package com.github.ariefannur.kmm.crypto.android.screen
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ariefannur.kmm.crypto.domain.GetListingLatest
@@ -17,6 +15,11 @@ class HomeScreenViewModel(
     private val _state: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(HomeScreenUiState.Loading)
     val homeUiState: StateFlow<HomeScreenUiState> = _state.asStateFlow()
 
+    private var _dataList = mutableListOf<Coin>()
+    fun getDetailCoin(symbol: String): Coin? {
+        return _dataList.find { it.symbol == symbol }
+    }
+
     init {
         getListing()
     }
@@ -24,7 +27,10 @@ class HomeScreenViewModel(
         getListingLatest("", scope = viewModelScope) {
             when(it) {
                 is DataState.Loading -> _state.value = HomeScreenUiState.Loading
-                is DataState.Success -> _state.value = HomeScreenUiState.Success(it.result)
+                is DataState.Success -> {
+                    _dataList = it.result.toMutableList()
+                    _state.value = HomeScreenUiState.Success(it.result)
+                }
                 is DataState.Failure -> _state.value = HomeScreenUiState.Error(it.message)
             }
         }

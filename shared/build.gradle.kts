@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.mockKmp)
     alias(libs.plugins.ksp)
     alias(libs.plugins.nativeCoroutine)
+    alias(libs.plugins.compose)
 }
 
 version = "1.0"
@@ -51,6 +52,11 @@ kotlin {
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.koin.core)
                 implementation(libs.sqldelight.runtime)
+
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(libs.kamel.image)
             }
         }
 
