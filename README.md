@@ -35,5 +35,11 @@ Presentation: Home
 
 Exploring compose multiplatform build shared presentation / view both android and iOS 
 
+## Detail Coin
+iOS
+<img src='screenshot/ios-detail-coin.png' width='300'>
+
+<img src='screenshot/android-detail-coin.jpg' width='300'>
+
 
 
