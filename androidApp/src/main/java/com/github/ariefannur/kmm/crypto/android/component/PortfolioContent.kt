@@ -23,7 +23,7 @@ fun PortfolioContent(modifier: Modifier = Modifier
     Column (modifier = modifier){
         Row (modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp), horizontalArrangement = Arrangement.Center){
+            .padding(top = 8.dp), horizontalArrangement = Arrangement.Center){
             Text(text = "\$", modifier = Modifier.align(alignment = Alignment.CenterVertically), style = MaterialTheme.typography.bodySmall)
             Text(text = "1420.00",
                 style = MaterialTheme.typography.displayLarge,

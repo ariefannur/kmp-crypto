@@ -4,5 +4,5 @@ import androidx.compose.runtime.Composable
 import com.github.ariefannur.kmm.crypto.model.Coin
 
 @Composable
-fun DetailScreenAndroid(coin: Coin) = DetailCoinScreen(coin)
+fun DetailScreenAndroid(coin: Coin, onBack: ()-> Unit) = DetailCoinScreen(coin, onBack)
 

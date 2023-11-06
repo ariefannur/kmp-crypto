@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -54,13 +55,23 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 @Composable
-fun DetailCoinScreen(coin: Coin) {
+fun DetailCoinScreen(coin: Coin, onBack: ()-> Unit) {
 
     MaterialTheme () {
         Scaffold { _ ->
             Column(
                 Modifier.verticalScroll(rememberScrollState())
             ) {
+                Row(Modifier.height(56.dp).padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 8.dp)) {
+                    IconButton(onClick = {
+                        onBack.invoke()
+                    }) {
+                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "back")
+                    }
+                    Spacer(Modifier.weight(0.65f))
+                    Text(text = coin.name, style = MaterialTheme.typography.h6)
+                    Spacer(Modifier.weight(1f))
+                }
                 Row(Modifier.padding(16.dp)) {
 //                        Box should be image
                     Box(modifier = Modifier.size(40.dp)) {
@@ -112,7 +123,6 @@ fun ChartCoinUI() {
     Column(
             Modifier
                 .fillMaxWidth()
-                .height(260.dp)
         ) {
         LaunchedEffect(graphData) {
             animationProgress.animateTo(1f, tween(3000))
@@ -152,20 +162,20 @@ fun ChartCoinUI() {
         val buttonSelected = ButtonDefaults.buttonColors(MaterialTheme.colors.primary)
         val buttonUnSelected = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceEvenly) {
             listButton.forEach { buttonName ->
                 if (selected == buttonName) {
                     Button(onClick = {
                         graphData = graphDatas.random()
                         selected = buttonName
-                    }, shape = MaterialTheme.shapes.medium, colors = buttonSelected) {
+                    }, shape = MaterialTheme.shapes.medium, colors = buttonSelected, modifier = Modifier.fillMaxHeight()) {
                         Text(buttonName)
                     }
                 } else {
                     Button(onClick = {
                         graphData = graphDatas.random()
                         selected = buttonName
-                    }, shape = MaterialTheme.shapes.medium, colors = buttonUnSelected) {
+                    }, shape = MaterialTheme.shapes.medium, colors = buttonUnSelected, modifier = Modifier.fillMaxHeight()) {
                         Text(buttonName)
                     }
                 }
@@ -249,8 +259,8 @@ fun DrawScope.drawChartArea() {
 @Composable
 fun ButtonActionUI() {
     Row (modifier = Modifier.fillMaxWidth()
-        .height(150.dp)
-        .padding(top = 50.dp, start = 16.dp, end = 16.dp)
+        .height(100.dp)
+        .padding(top = 20.dp, start = 16.dp, end = 16.dp)
         , Arrangement.SpaceAround){
         Column (verticalArrangement = Arrangement.Center){
             IconButton(onClick = { /*TODO*/ }) {
@@ -276,7 +286,7 @@ fun ButtonActionUI() {
 @Composable
 fun BottomDetailCoinUI(coin: Coin) {
     Column (modifier = Modifier
-        .padding(top = 25.dp , start = 16.dp, end = 16.dp)
+        .padding(top = 25.dp , start = 16.dp, end = 16.dp, bottom = 20.dp)
     ) {
         Text("In Wallet", style = MaterialTheme.typography.body1, modifier = Modifier.padding(bottom = 16.dp))
         Row {

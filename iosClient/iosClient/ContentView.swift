@@ -76,9 +76,12 @@ struct ContentView: View {
 
 struct DetailViewCompose : UIViewControllerRepresentable {
     var coin: Coin
+    @Environment(\.dismiss) var dismiss
     
     func makeUIViewController(context: Context) -> UIViewController {
-        return Detail_iosKt.DetailCoinViewController(coin: coin)
+        return Detail_iosKt.DetailCoinViewController(coin: coin, onBack: {
+            dismiss()
+        })
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {

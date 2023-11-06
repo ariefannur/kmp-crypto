@@ -66,7 +66,9 @@ fun HomeScreen(){
             composable(route = "detail/{symbol}") {backStackEntry ->
                 val symbol = backStackEntry.arguments?.getString("symbol") ?: ""
                 viewModel.getDetailCoin(symbol)?.let {
-                    DetailScreenAndroid(it)
+                    DetailScreenAndroid(it) {
+                        navController.popBackStack()
+                    }
                 }
             }
         }
