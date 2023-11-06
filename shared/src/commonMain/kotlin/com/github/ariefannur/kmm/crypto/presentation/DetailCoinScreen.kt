@@ -48,6 +48,7 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.unit.dp
+import com.github.ariefannur.kmm.crypto.common.roundOffDecimal
 import com.github.ariefannur.kmm.crypto.model.Coin
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -56,29 +57,26 @@ import io.kamel.image.asyncPainterResource
 fun DetailCoinScreen(coin: Coin) {
 
     MaterialTheme () {
-        Scaffold { innerPadding ->
-            Surface {
-                Column(
-                    Modifier.padding(innerPadding)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Row(Modifier.padding(16.dp)) {
+        Scaffold { _ ->
+            Column(
+                Modifier.verticalScroll(rememberScrollState())
+            ) {
+                Row(Modifier.padding(16.dp)) {
 //                        Box should be image
-                        Box(modifier = Modifier.size(40.dp)) {
-                            KamelImage(asyncPainterResource(data = coin.imgLogo), contentDescription = "img-detail")
-                        }
-                        Column(modifier = Modifier.padding(start = 12.dp)) {
-                            Text("\$${coin.price}", style = MaterialTheme.typography.h5)
-                            Text(
-                                text = "${if (coin.percentage < 0) "↘" else "↗"} ${coin.percentage}", style = MaterialTheme.typography.body1
-                            )
-                        }
+                    Box(modifier = Modifier.size(40.dp)) {
+                        KamelImage(asyncPainterResource(data = coin.imgLogo), contentDescription = "img-detail")
                     }
-
-                    ChartCoinUI()
-                    ButtonActionUI()
-                    BottomDetailCoinUI(coin)
+                    Column(modifier = Modifier.padding(start = 12.dp)) {
+                        Text("\$${roundOffDecimal(coin.price)}", style = MaterialTheme.typography.h5)
+                        Text(
+                            text = "${if (coin.percentage < 0) "↘" else "↗"} ${roundOffDecimal(coin.percentage)}", style = MaterialTheme.typography.body1
+                        )
+                    }
                 }
+
+                ChartCoinUI()
+                ButtonActionUI()
+                BottomDetailCoinUI(coin)
             }
         }
     }
@@ -111,46 +109,45 @@ fun ChartCoinUI() {
 
     val listButton = listOf("D", "W", "M", "Y")
 
-    Column {
-        Row(
+    Column(
             Modifier
+                .fillMaxWidth()
                 .height(260.dp)
-                .fillMaxSize()
         ) {
-            LaunchedEffect(graphData) {
-                animationProgress.animateTo(1f, tween(3000))
-            }
-
-            Spacer(modifier = Modifier
-                .padding(8.dp)
-                .aspectRatio(3 / 2f)
-                .fillMaxSize()
-                .drawWithCache {
-                    val path = generatePath(
-                        graphData, size, 100.dp.value
-                    )
-                    val filledPath = Path()
-                    filledPath.addPath(path)
-                    filledPath.lineTo(size.width, size.height)
-                    filledPath.lineTo(0f, size.height)
-                    filledPath.close()
-
-                    val brush = Brush.verticalGradient(
-                        listOf(
-                            Color.Blue.copy(alpha = 0.4f),
-                            Color.Transparent
-                        )
-                    )
-
-                    onDrawBehind {
-                        this.drawChartArea()
-                        clipRect(right = size.width * animationProgress.value) {
-                            drawPath(path, Color.Blue, style = Stroke(2.dp.toPx()))
-                            drawPath(filledPath, brush = brush, style = Fill)
-                        }
-                    }
-                })
+        LaunchedEffect(graphData) {
+            animationProgress.animateTo(1f, tween(3000))
         }
+
+        Spacer(modifier = Modifier
+            .padding(8.dp)
+            .aspectRatio(3 / 2f)
+            .fillMaxSize()
+            .drawWithCache {
+                val path = generatePath(
+                    graphData, size, 100.dp.value
+                )
+                val filledPath = Path()
+                filledPath.addPath(path)
+                filledPath.lineTo(size.width, size.height)
+                filledPath.lineTo(0f, size.height)
+                filledPath.close()
+
+                val brush = Brush.verticalGradient(
+                    listOf(
+                        Color.Blue.copy(alpha = 0.4f),
+                        Color.Transparent
+                    )
+                )
+
+                onDrawBehind {
+                    this.drawChartArea()
+                    clipRect(right = size.width * animationProgress.value) {
+                        drawPath(path, Color.Blue, style = Stroke(2.dp.toPx()))
+                        drawPath(filledPath, brush = brush, style = Fill)
+                    }
+                }
+            })
+
 
         val buttonSelected = ButtonDefaults.buttonColors(MaterialTheme.colors.primary)
         val buttonUnSelected = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
@@ -175,6 +172,7 @@ fun ChartCoinUI() {
             }
         }
     }
+
 }
 
 fun generatePath(data: List<Float>, size: Size, maxY: Float): Path {
@@ -282,10 +280,10 @@ fun BottomDetailCoinUI(coin: Coin) {
     ) {
         Text("In Wallet", style = MaterialTheme.typography.body1, modifier = Modifier.padding(bottom = 16.dp))
         Row {
-            Text(text = "${coin.price}", style = MaterialTheme.typography.subtitle1)
+            Text(text = "${roundOffDecimal(coin.price)}", style = MaterialTheme.typography.subtitle1)
             Text(text = coin.symbol, style = MaterialTheme.typography.body1)
             Spacer(modifier = Modifier.weight(1f))
-            Text(text = "\$${coin.move24}", style = MaterialTheme.typography.body1)
+            Text(text = "\$${roundOffDecimal(coin.move24)}", style = MaterialTheme.typography.body1)
         }
         Row (modifier = Modifier.fillMaxWidth().padding(top =16.dp), horizontalArrangement = Arrangement.SpaceBetween){
             Button(onClick = {}, modifier = Modifier.weight(1f).padding(end = 16.dp).height(48.dp), shape = MaterialTheme.shapes.medium) {

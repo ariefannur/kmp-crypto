@@ -9,3 +9,5 @@ expect class Platform() {
 expect class DatabaseDriverFactory {
     fun createDriver(): SqlDriver
 }
+
+expect fun roundOffDecimal(value: Double): Double

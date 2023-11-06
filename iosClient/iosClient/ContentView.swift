@@ -43,7 +43,8 @@ struct ContentView: View {
                         maxWidth: .infinity)
                     
                     ForEach(viewModel.items, id: \.self) { item in
-                        NavigationLink(destination:DetailViewCompose(coin: item)) {
+                        NavigationLink(destination:DetailViewCompose(coin: item).navigationBarTitle("")
+                                        .navigationBarHidden(true)) {
                             HStack {
                                 AsyncImage(url: URL(string: item.imgLogo))
                                     .scaledToFit()
